@@ -12,6 +12,14 @@ $num = trim(fgets(STDIN));
 echo "El valor es ". $num ;*/
 
 //mostrarMenu();
+$meses = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"]; 
+
+$anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+
+$matrizTemperatura = cargaAutomatica();
+
+mostrarTemperaturas($matrizTemperatura, $meses, $anios);
+
 /**************************************/
 /***** DEFINICION DE FUNCIONES ********/
 /**************************************/
@@ -92,7 +100,7 @@ function cargaManual($meses, $anios ) {
  * @param array $anios 
 */
 
-function mostrarTemperaturas($matrizTemp, $meses, $anios){
+/*function mostrarTemperaturas($matrizTemp, $meses, $anios){
     //int $fila, $col, $cantidadAnios, $cantidadMeses;
 
     $cantidadAnios = count($anios);
@@ -100,8 +108,31 @@ function mostrarTemperaturas($matrizTemp, $meses, $anios){
 
     for ($fila = 0; $fila < ($cantidadAnios -1); $fila++){
         for ($col = 0; $col < ($cantidadMeses -1); $col++) {
-		    echo "El valor de la temperatura del año:  ". $anios[$fila] . " y mes: ". $meses[$col]. " es: ". $matrizTemp[$fila][$col];
+		    echo "El valor de la temperatura del año:  ". $anios[$fila] . " y mes: ". $meses[$col]. " es: ". $matrizTemp[$fila][$col]. "\n";
         }    
+    }
+	    
+}*/
+function mostrarTemperaturas($matrizTemp, $meses, $anios){
+    //int $fila, $col, $cantidadAnios, $cantidadMeses, $i;
+
+    $cantidadAnios = count($anios);
+    $cantidadMeses = count($meses);
+
+    echo "Año ";
+    for ($i = 0; $i < ($cantidadMeses - 1); $i++) {
+        echo "  ". $meses[$i]." ";
+    }
+    echo "\n";
+    for ($fila = 0; $fila < ($cantidadAnios -1); $fila++){
+        echo $anios[$fila]."|";    
+        //echo "\n";
+        for ($col = 0; $col < ($cantidadMeses -1); $col++) {
+            
+		    echo "  ".$matrizTemp[$fila][$col]. " |";
+        }    
+        
+    echo "\n";
     }
 	    
 }
