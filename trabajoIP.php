@@ -36,16 +36,15 @@ function mostrarMenu(){
     echo "1. Carga automática de temperaturas\n";
     echo "2. Carga manual de temperaturas\n";
     echo "3. Mostrar todas las temperaturas\n";
-    echo "4. Mostrar temperatura por año y mes\n";
-    echo "5. Mostrar temperaturas por año\n";
-    echo "6. Mostrar temperaturas por mes\n";
-    echo "7. Hallar máximas y mínimas\n";
-    echo "8. Mostrar temperaturas de primavera\n";
-    echo "9. Mostrar temperaturas de invierno\n";
-    echo "10. Mostrar arreglo asociativo\n";
+    echo "4. Mostrar temperatura dado un año y un mes\n";
+    echo "5. Mostrar las temperaturas dado un año\n";
+    echo "6. Mostrar las temperaturas de todos los años, dado un mes y mostrar el promedio\n";
+    echo "7. Hallar temperaturas máxima y mínima, mostrando el año y el mes\n";
+    echo "8. Mostrar las temperaturas de primavera (oct-nov-dic) de todos los años\n";
+    echo "9. Mostrar las temperaturas de invierno (jul-ago-sep) de los últimos 5 años\n";
+    echo "10. Mostrar arreglo asociativo (completa - primavera - invierno)\n";
     echo "0. Salir.\n";
 } 
-
 
 /**
  * carga automática de la matriz de temperaturas
@@ -164,16 +163,14 @@ function validarAnio($anios, $anioUsuario) {
 
 /**
  * Valida un mes ingresado por el usuario retornando su posición, en caso que no sea válido retorna -1
- * @param array $meses
- * @param string $mesUsuario
+ * @param int $mesUsuario
  * @return int
 */
 
 function validarMes($mesUsuario){
-    //int $posicion, $col, $cantidadMeses
+    //int $posicion
 
     $posicion = -1; // Mes no encontrado
-    //$cantidadMeses = count($meses);
 
     if($mesUsuario >= 1 && $mesUsuario <= 12){
         $posicion = $mesUsuario - 1;
@@ -248,68 +245,74 @@ FIN MODULO
 (**Devuelve la temperatura dado un año y un mes*)
 
 
-MODULO retornaTemperaturaPorFecha(ARREGLO matrizTemp, ENTERO fila, ENTERO columna ) RETORNO REAL 
+/**
+ * Retorna la temperatura del mes y año ingresado por el usuario
+ * @param array $matrizTemp
+ * @param int $fila, $col
+ * @return float
+*/
+function retornaTemperaturaPorFecha($matrizTemp, $fila, $columna ){
+    return $matrizTemp[$fila][$columna];
+} 
 
-RETORNO matrizTemp[fila][columna]
+/**
+ * Devuelve un arreglo con las temperaturas de un año dado
+ * @param array $matrizTemp
+ * @param int $filaAnio
+ * @return array
+*/
 
-FIN MODULO
+function obtenerTemperaturasPorAnio($matrizTemp, $filaAnio){
+    //int $col
+    //array temperaturasPorAnio;
+    $temperaturasPorAnio <- [];
 
-
-E) Mostrar para un determinado año, las temperaturas de todos los meses
-
-(**Devuelve un arreglo con las temperaturas de un año dado*)
-
-MODULO obtenerTemperaturasPorAnio(ARREGLO matrizTemp, ENTERO filaAnio) RETORNO ARREGLO 
-
-ENTERO col
-temperaturasPorAnio <- []
-
-PARA col <- 0 HASTA 11 HACER
-	temperaturasPorAnio[col] <- matrizTemp[filaAnio][col]
-FIN PARA
-
-RETORNO temperaturasPorAnio
-
-FIN MODULO
-
-(**Devuelve un arreglo con las temperaturas de un año*)
-
-MODULO mostrarTemperaturasPorAnio(ARREGLO matrizTemp, ARREGLO anio) RETORNO ∅
-
-
-
-FIN MODULO
+    for ($col = 0; $col < 12; $col++){
+        $temperaturasPorAnio[$col] <- $matrizTemp[$filaAnio][$col];
+    }
+    return $temperaturasPorAnio;
+}
 
 
-F) Mostrar para un mes determinado, las temperaturas de todos los años y el promedio.
+// (**Devuelve un arreglo con las temperaturas de un año*)
 
-(**Devuelve un arreglo con las temperaturas de todos los años de un mes dado*)
+/**
+ * Devuelve un arreglo con las temperaturas de todos los años de un mes dado
+ * @param array $matrizTemp
+ * @param int $columnaMes
+ * @return array
+*/
 
-MODULO obtenerTemperaturasPorMes(ARREGLO matrizTemp, ENTERO columnaMes) RETORNO ARREGLO 
+function obtenerTemperaturasPorMes($matrizTemp, int $columnaMes){
+    //int $fila
+    //array temperaturasPorMes
+    $temperaturasPorMes <- [];
 
-ENTERO fila
-temperaturasPorMes <- []
+    for ($fila = 0; $fila < 10; $fila++){
+        $temperaturasPorMes[$fila] = $matrizTemp[$fila][$columnaMes];
+    };
 
-PARA fila <- 0 HASTA 9 HACER
-	temperaturasPorMes[fila] <- matrizTemp[fila][columnaMes]
-FIN PARA
+    return $temperaturasPorMes;
+}
 
-RETORNO temperaturasPorMes
-FIN MODULO
+/**
+ * Devuelve el promedio de la temperatura de todos los años de un mes dado
+ * @param array $tempMes
+ * @return float
+*/
 
-(**Devuelve el promedio de la temperatura de todos los años de un mes dado*)
-MODULO promedioDelMes(ARREGLO meses) RETORNO REAL
-ENTERO fila, sumatoria, promedio
+function promedioDelMes($tempMes){
+    //int $fila, $sumatoria, $promedio
+    $sumatoria = 0;
+    $promedio = 0;
 
-PARA fila <- 0 HASTA 9 HACER
-	sumatoria <- sumatoria +  meses[fila]
-FIN PARA
+    for ($fila = 0; $fila < 10; $fila++){
+        $sumatoria = $sumatoria + $tempMes[$fila];
+    }
+	$promedio = $sumatoria / 10;
 
-promedio <- sumatoria / 10;
-
-RETORNO promedio
-
-FIN MODULO
+    return $promedio;
+}
 
 
 G) Hallar las temperaturas máximas y mínimas, indicando año y mes a los que corresponden. Si el máximo o mínimo se repite, mostrar el primero encontrado.
