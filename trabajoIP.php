@@ -18,7 +18,10 @@ $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
 $matrizTemperatura = cargaAutomatica();
 
-mostrarTemperaturas($matrizTemperatura, $meses, $anios);
+//mostrarTemperaturas($matrizTemperatura, $meses, $anios);
+
+$pos = validarAnio($anios, 2018);
+echo $pos;
 
 /**************************************/
 /***** DEFINICION DE FUNCIONES ********/
@@ -151,7 +154,7 @@ function validarAnio($anios, $anioUsuario) {
     $cantidadAnios = count($anios);
 
     for($fila = 0; $fila < ($cantidadAnios - 1); $fila++){
-        if ($anios[$fila] = $anioUsuario){
+        if ($anios[$fila] == $anioUsuario){
             $posicion  = $fila;  // Retorna el índice del año
         } 
     }
@@ -174,7 +177,7 @@ function validarMes($meses, $mesUsuario){
     $cantidadMeses = count($meses);
 
     for ($col = 0; $cantidadMeses - 1; $col++){
-        if ($meses[$col] = $mesUsuario){
+        if ($meses[$col] == $mesUsuario){
             $posicion  = $col;  // Retorna el índice del mes
         }
     }
