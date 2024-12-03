@@ -16,12 +16,12 @@ $meses = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", 
 
 $anios = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
 
-$matrizTemperatura = cargaAutomatica();
+$matrizTemperatura = cargaManual($meses, $anios);
 
-//mostrarTemperaturas($matrizTemperatura, $meses, $anios);
+mostrarTemperaturas($matrizTemperatura, $meses, $anios);
 
-$pos = validarAnio($anios, 2018);
-echo $pos;
+//$pos = validarAnio($anios, 2018);
+//echo $pos;
 
 /**************************************/
 /***** DEFINICION DE FUNCIONES ********/
@@ -84,9 +84,9 @@ function cargaManual($meses, $anios ) {
     $cantidadAnios = count($anios);
     $cantidadMeses = count($meses);
 
-    for ($fila = 0; $fila < ($cantidadAnios -1); $fila++ ){
-        for ($col = 0; $col  < ($cantidadMeses -1); $col++ ) {
-            echo "Ingrese el valor de la temperatura del año:  ". $anios[$fila] . " y mes: ". $meses[$col].  " : ";
+    for ($fila = 0; $fila < ($cantidadAnios); $fila++ ){
+        for ($col = 0; $col  < $cantidadMeses; $col++ ) {
+            echo "Ingrese el valor de la temperatura del año ". $anios[$fila] . " y mes ". $meses[$col].  " :";
 		    $matrizTemperatura[$fila][$col] = trim(fgets(STDIN));
               //debo controlar que sea un ingreso valido? is_float()
         }
@@ -123,14 +123,14 @@ function mostrarTemperaturas($matrizTemp, $meses, $anios){
     $cantidadMeses = count($meses);
 
     echo "Año ";
-    for ($i = 0; $i < ($cantidadMeses - 1); $i++) {
+    for ($i = 0; $i < ($cantidadMeses); $i++) {
         echo "  ". $meses[$i]." ";
     }
     echo "\n";
-    for ($fila = 0; $fila < ($cantidadAnios -1); $fila++){
+    for ($fila = 0; $fila < ($cantidadAnios); $fila++){
         echo $anios[$fila]."|";    
         //echo "\n";
-        for ($col = 0; $col < ($cantidadMeses -1); $col++) {
+        for ($col = 0; $col < ($cantidadMeses); $col++) {
             
 		    echo "  ".$matrizTemp[$fila][$col]. " |";
         }    
@@ -162,7 +162,6 @@ function validarAnio($anios, $anioUsuario) {
  return $posicion;
 }
 
-
 /**
  * Valida un mes ingresado por el usuario retornando su posición, en caso que no sea válido retorna -1
  * @param array $meses
@@ -170,19 +169,39 @@ function validarAnio($anios, $anioUsuario) {
  * @return int
 */
 
+function validarMes($mesUsuario){
+    //int $posicion, $col, $cantidadMeses
+
+    $posicion = -1; // Mes no encontrado
+    //$cantidadMeses = count($meses);
+
+    if($mesUsuario >= 1 && $mesUsuario <= 12){
+        $posicion = $mesUsuario - 1;
+    }
+    return $posicion;
+}
+
+
+/*
+ * Valida un mes ingresado por el usuario retornando su posición, en caso que no sea válido retorna -1
+ * @param array $meses
+ * @param string $mesUsuario
+ * @return int
+
+
 function validarMes($meses, $mesUsuario){
     //int $posicion, $col, $cantidadMeses
 
     $posicion = -1; // Mes no encontrado
     $cantidadMeses = count($meses);
 
-    for ($col = 0; $cantidadMeses - 1; $col++){
+    for ($col = 0; $col < $cantidadMeses; $col++){
         if ($meses[$col] == $mesUsuario){
             $posicion  = $col;  // Retorna el índice del mes
         }
     }
     return $posicion;
-}
+}*/
 
 
 /**
