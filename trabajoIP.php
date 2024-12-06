@@ -286,7 +286,7 @@ function obtenerTemperaturasPorAnio($matrizTemp, $filaAnio){
 function obtenerTemperaturasPorMes($matrizTemp, int $columnaMes){
     //int $fila
     //array temperaturasPorMes
-    $temperaturasPorMes <- [];
+    $temperaturasPorMes = [];
 
     for ($fila = 0; $fila < 10; $fila++){
         $temperaturasPorMes[$fila] = $matrizTemp[$fila][$columnaMes];
@@ -314,93 +314,105 @@ function promedioDelMes($tempMes){
     return $promedio;
 }
 
+/**
+ * Devuelve un arreglo donde en la 1º posición almacena la temperatura máxima, en la 2º y en la 3º posición almacena la fila y columna de la temperatura máxima, respectivamente
+ * @param array matrizTemp
+ * @param array $meses
+ * @param array $anios
+ * @return array
+*/
 
-G) Hallar las temperaturas máximas y mínimas, indicando año y mes a los que corresponden. Si el máximo o mínimo se repite, mostrar el primero encontrado.
+function hallarTemperaturaMax($matrizTemp, $meses, $anios){
+    //int $fila, $col
+    //array maxima
+    $maxima = [];
+    $maxima[0] = $matrizTemp[0][0];
+    $maxima[1] = 0;
+    $maxima[2] = 0;
 
-(**Devuelve un arreglo donde en la 1º posición almacena la temperatura máxima, en la 2º y en la 3º posición almacena la fila y columna de la temperatura máxima, respectivamente*)
+    $cantidadAnios = count($anios);
+    $cantidadMeses = count($meses);
 
-MODULO hallarTemperaturaMax(ARREGLO matrizTemp, ARREGLO meses, ARREGLO anios) RETORNO ARREGLO??
+    for ($fila = 0; $fila <$cantidadAnios; $fila++){
+        for($col = 0; $col < $cantidadMeses; $col++){
+            if ($matrizTemp[$fila][$col] > $maxima[0] ){
+                $maxima[0] = $matrizTemp[$fila][$col];
+	            $maxima[1] = $fila;
+                $maxima[2] = $col;
+            } 
 
-ENTERO fila, col
-ARREGLO maxima[]
-maxima[0]  <-  matrizTemp[0][0]
-maxima[1] <- 0
-maxima[2] <- 0
+        } // Iterar meses
+    } //Iterar años
+	return $maxima;
+}
 
-cantidadAnios <- CANT(anios)
-cantidadMeses <- CANT(meses)
+/**
+ * Devuelve un arreglo donde en la 1º posición almacena la temperatura mínima, en la 2º y en la 3º posición almacena la fila y columna de la temperatura máxima, respectivamente
+ * @param array matrizTemp
+ * @param array $meses
+ * @param array $anios
+ * @return array
+*/
 
-PARA fila  <-  0 HASTA (cantidadAnios -1) PASO 1 HACER //Iterar años
-	PARA col DESDE 0 HASTA 1(cantidadMeses -1) PASO 1 HACER // Iterar meses
-		SI (matrizTemp[fila][col] > tempMaxima ) ENTONCES
-maxima[0]  <- matrizTemp[fila][col]		
-	maxima[1] <- fila
-maxima[2] <- col
-FIN SI
-	FIN PARA
-FIN PARA
+function hallarTemperaturaMin($matrizTemp, $meses, $anios){
+    //int $fila, $col
+    //array minima
 
-RETORNO maxima
+    $minima = [];
+    $minima[0] = $matrizTemp[0][0];
+    $minima[1] = 0;
+    $minima[2] = 0;
 
-FIN MODULO
+    $cantidadAnios = count($anios);
+    $cantidadMeses = count($meses);
 
-MODULO hallarTemperaturaMin(ARREGLO matrizTemp, ARREGLO meses, ARREGLO anios) RETORNO ARREGLO??
+    for ($fila = 0; $fila <$cantidadAnios; $fila){
+        for($col = 0; $col < $cantidadMeses; $col){
+            if ($matrizTemp[$fila][$col] < $maxima[0] ){
+                $maxima[0] = $matrizTemp[$fila][$col];
+	            $maxima[1] = $fila;
+                $maxima[2] = $col;
+            } 
 
-ENTERO fila, col
-ARREGLO minima[]
-minima[0]  <-  matrizTemp[0][0]
-minima[1] <- 0
-minima[2] <- 0
+        } // Iterar meses
+    } //Iterar años
+	return $minima;
+} 
 
-cantidadAnios <- CANT(anios)
-cantidadMeses <- CANT(meses)
-
-PARA fila  <-  0 HASTA (cantidadAnios -1) PASO 1 HACER //Iterar años
-	PARA col DESDE 0 HASTA 1(cantidadMeses -1) PASO 1 HACER // Iterar meses
-		SI (matrizTemp[fila][col] < tempMaxima ) ENTONCES
-maxima[0]  <- matrizTemp[fila][col]		
-	maxima[1] <- fila
-maxima[2] <- col
-FIN SI
-	FIN PARA
-FIN PARA
-
-RETORNO minima
-
-FIN MODULO
-
-
-
-H) Crear y mostrar un arreglo bidimensional con los datos de primavera (oct-nov-dic) de todos los años.
-
-(**Devuelve un arreglo con las temperaturas de primavera de todos los años*)
-
-MODULO obtenerTemperaturasDePrimavera(ARREGLO matrizTemp) RETORNO ARREGLO 
-meses = ["octubre", "noviembre", "diciembre"]; 
-ENTERO fila, col, columna
-columna <- 0
-
-temperaturasPrimavera <- []
-
-PARA fila <- 0 HASTA 9 HACER
-PARA col <- 9 HASTA 11 HACER
-	temperaturasPrimavera[fila][columna] <- matrizTemp[fila][columnaMes]
-		columna  <- columna + 1
-	FIN PARA
-	columna  <- 0
-FIN PARA
-
-RETORNO temperaturasPrimavera
-FIN MODULO
+/**
+ * Devuelve un arreglo con las temperaturas de primavera  (oct-nov-dic) de todos los años
+ * @param array matrizTemp
+ * @return array
+*/
 
 
-I) Crear y mostrar un arreglo bidimensional con los datos de los últimos 5 años de invierno (jul-ago-sep).
+function obtenerTemperaturasDePrimavera($matrizTemp){
+    //int $fila, $col, $columna
+    //array $temperaturasPrimavera
+   // $meses = ["octubre", "noviembre", "diciembre"]; Este aca no lo uso
 
-(**Devuelve un arreglo con las temperaturas de los últimos 5 años de invierno*)
+    $columna = 0;
 
-MODULO obtenerTemperaturasInvierno(ARREGLO matrizTemp) RETORNO ARREGLO 
+    $temperaturasPrimavera <- [];
 
-ENTERO fila, col, filaIndice, columnaIndice
+    for ($fila = 0; $fila < 10; $fila++){
+        for ($col = 9; $col < 12; $col++){
+            $temperaturasPrimavera[$fila][$columna] = $matrizTemp[$fila][$col];
+		    $columna = $columna + 1;
+        } 
+	    $columna  <- 0;
+    }
+    return $temperaturasPrimavera;
+}
+
+/**
+ * Devuelve un arreglo con las temperaturas de los últimos 5 años de invierno (jul-ago-sep).
+ * @param array matrizTemp
+ * @return array
+*/
+
+function obtenerTemperaturasInvierno($matrizTemp){
+    ENTERO fila, col, filaIndice, columnaIndice
 filaIndice <- 0
 columnaIndice <- 0 
 
@@ -420,8 +432,7 @@ PARA col <- 0 HASTA 11 HACER
 FIN PARA
 
 RETORNO temperaturasPorAnio
-
-FIN MODULO
+} 
 
 
 J) Crear No se muestra? un arreglo asociativo que contenga en la primera posición con clave “completa” la matriz completa de temperaturas, en la segunda posición con clave “primavera” la matriz creada en el inciso h., y en la tercera posición con clave “invierno” la matriz creada en el inciso i.
